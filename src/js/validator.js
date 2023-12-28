@@ -5,13 +5,30 @@ export default class Validator {
     }
     
     validateUserName() {
-        const login = /^[\w-]+$/i;
-        const negative = /^(?![\d_-])(?![\d_-]*$)(\d{0,3})+$/;
-        
-        if (login.test(this.name) && negative.test(this.name)) {
-            return this.name;
-        } else {
-            throw new Error('Имя не отвечает условиям');
+        if (/\d{4,}/.test(this.name)) {
+            throw new Error('Имя не должно содержать больше трёх цифр');
         }
+        if (/^\d/.test(this.name)) {
+            throw new Error('Имя не должно начинаться с цифры');
+        }
+        if (/^-/.test(this.name)) {
+            throw new Error('Имя не должно начинаться с тире');
+        }
+        if (/^_/.test(this.name)) {
+            throw new Error('Имя не должно начинаться с подчёркивания');
+        }
+
+        if (/\d+$/.test(this.name)) {
+            throw new Error('Имя не должно заканчиваться цифрой');
+        }
+        if (/-$/.test(this.name)) {
+            throw new Error('Имя не должно заканчиваться тире');
+        }
+        if (/_$/.test(this.name)) {
+            throw new Error('Имя не должно заканчиваться подчёркиванием');
+        }
+        if (/[^\w-]/.test(this.name)) {
+         throw new Error('Имя должно содержать только латинские буквы, подчёркивание или тире');  
+        } 
     }
 }
